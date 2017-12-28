@@ -25,7 +25,7 @@ SECRET_KEY = '(idbe)!=o2&zb)+xivw%j4oa1s!ilydg&y0!mn-powywc00vpn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oo.generic',
     'oo.meta',
     'oo.core',
     'oo.users',
@@ -79,8 +80,10 @@ WSGI_APPLICATION = 'oo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'infinity',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'localhost',
+        'ATOMIC_REQUESTS': True,
     }
 }
 
