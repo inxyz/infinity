@@ -12,13 +12,13 @@ from oo.generic.models import (
     GenericTranslationModel
 )
 from oo.users.models import User, CryptoKeypair
-# from oo.transactions.mixins import (
-#     TopicTransactionMixin,
-#     CommentTransactionMixin
-# )
+from oo.transactions.mixins import (
+    TopicTransactionMixin,
+    CommentTransactionMixin
+)
 
-# TopicTransactionMixin, 
-class Topic(GenericTranslationModel):
+
+class Topic(TopicTransactionMixin, GenericTranslationModel):
     """
     Y: Main content type, to include fields of all infty types.
 
@@ -92,8 +92,8 @@ class Topic(GenericTranslationModel):
         verbose_name_plural = _("Topics")
         ordering = ('-pk',)
 
-# CommentTransactionMixin, 
-class Comment(GenericTranslationModel):
+
+class Comment(CommentTransactionMixin, GenericTranslationModel):
     """
     X: Comments are the place to discuss and claim time and things.
 
