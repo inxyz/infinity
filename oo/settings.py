@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'oo.core',
     'oo.users',
     'oo.transactions',
+    'oo.api',
 ]
 
 MIDDLEWARE = [
