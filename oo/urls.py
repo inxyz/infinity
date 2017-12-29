@@ -23,7 +23,7 @@ from oo.users import views
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/admin/')),
+    path('', RedirectView.as_view(url='/api/')),
     # Django Admin, use {% url 'admin:index' %}
 
     path('admin/', admin.site.urls),
