@@ -8,9 +8,8 @@ Then:
 
 ```
 cd infinity
-virtualenv -ppython3 .env
-. .env/bin/activate
-pip install -r requirements.txt
+pipenv shell
+pipenv install
 python manage.py migrate
 python manage.py runserver
 ```
