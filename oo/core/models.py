@@ -1,10 +1,10 @@
-from django.db import models
-
-# Create your models here.
-from decimal import Decimal
 from re import finditer
+from decimal import Decimal
 
-from django.contrib.postgres.fields import ArrayField
+
+from django.db import models
+# Create your models here.
+
 from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
 
