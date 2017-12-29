@@ -25,4 +25,4 @@ python manage.py loaddata hour_price_snapshots
 
 Run tests:
 
-`./manage.py test`
+`py.test`
