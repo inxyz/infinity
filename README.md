@@ -7,7 +7,7 @@ Install psql (PostgreSQL) 10.1
 Then:
 
 ```
-cd blogic
+cd infinity
 virtualenv -ppython3 .env
 . .env/bin/activate
 pip install -r requirements.txt
