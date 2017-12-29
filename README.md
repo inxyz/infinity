@@ -22,3 +22,7 @@ python manage.py loaddata languages currencies
 python manage.py loaddata currency_price_snapshots
 python manage.py loaddata hour_price_snapshots
 ```
+
+Run tests:
+
+`./manage.py test`

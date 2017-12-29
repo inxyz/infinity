@@ -1,5 +1,5 @@
 # coding: utf-8
-from autofixture import AutoFixture
+# from autofixture import AutoFixture
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
@@ -9,7 +9,8 @@ from oo.users.models import User
 
 class TopicCreateTestCase(APITestCase):
     def setUp(self):
-        self.user = AutoFixture(User).create(1)[0]
+        # self.user = AutoFixture(User).create(1)[0]
+        self.user = User.objects.create(username='hello', email='hello@world.xyz')
         self.client.force_login(self.user)
 
     def test_create_topic_response_201(self):
