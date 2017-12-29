@@ -37,13 +37,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
     'oo.generic',
     'oo.meta',
     'oo.core',
     'oo.users',
     'oo.transactions',
     'oo.api',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'corsheaders',
+    'captcha',
+    'django_filters',
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,7 +69,35 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+
+}
+
+
 
 ROOT_URLCONF = 'oo.urls'
 
@@ -108,6 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -129,3 +174,39 @@ STATIC_URL = '/static/'
 
 # Use users app's User
 AUTH_USER_MODEL = 'users.User'
+
+# EMAIL CONFIGURATION
+# ------------------------------------------------------------------------------
+SENDGRID_API_KEY = ''
+
+if SENDGRID_API_KEY:
+    EMAIL_BACKEND = "sgbackend.SendGridBackend"
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'INFINITY <noreply@localhost>'
+EMAIL_SUBJECT_PREFIX = '[IF]'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+# One-Time Password Authentication
+OTP_GENERATION_LIMIT = 10
+
+# Some defaults
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'never'
+
+ACCOUNT_ALLOW_REGISTRATION = True
+ACCOUNT_ADAPTER = 'oo.users.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'oo.users.adapters.SocialAccountAdapter'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+IPDB_API_ROOT = ''
+IPDB_APP_ID = ''
+IPDB_APP_KEY = ''
