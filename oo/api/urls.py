@@ -5,15 +5,15 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 urlpatterns = [
-    path(
-        'v1/',
-        include('oo.api.v1.urls')
-    ),
-    path('docs/',
+    path('',
         include_docs_urls(
             title='Infinity API',
             permission_classes=(IsAuthenticatedOrReadOnly,)
         )
+    ),
+    path(
+        'v1/',
+        include('oo.api.v1.urls')
     ),
     path(
         'api-auth/',
