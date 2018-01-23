@@ -1,5 +1,7 @@
 # Infinity
 
+[![Build Status](https://travis-ci.org/aezik/infinity.svg?branch=master)](https://travis-ci.org/aezik/infinity)
+
 Install psql (PostgreSQL) 10.1, `createdb infinity`
 
 `git clone git@github.com:inxyz/infinity.git`
