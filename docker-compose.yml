@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+      args:
+        requirements_file: local.txt
+    image: infamily/infinity:dev
+    command: /start-dev.sh
+    volumes:
+      - .:/app:rw
+      - ./compose/web/00-jupyterlab-startup.py:/root/.ipython/profile_default/startup/00-jupyterlab-startup.py:ro
+    ports:
+      - "8000:8000"
+      - "8888:8888"
