@@ -7,7 +7,7 @@ services:
       dockerfile: ./compose/web/Dockerfile
       args:
         requirements_file: local.txt
-    image: infamily/infinity:dev
+    image: metallica127/infinity:dev
     command: /start-dev.sh
     volumes:
       - .:/app:rw

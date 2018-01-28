@@ -9,4 +9,4 @@ source ${KEYS_DIR}/env.sh
 
 echo "Push docker image to the Docker Hub..."
 docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
-docker push metallica127/infinity:latest
+docker push metallica127/infinity:dev
