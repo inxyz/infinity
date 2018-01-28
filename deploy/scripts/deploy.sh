@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 
-
-gpg ../../keys/env.sh.gpg
-source ../../keys/env.sh
+KEYS_DIR="$(dirname "$0")../../keys"
+gpg ${KEYS_DIR}/env.sh.gpg
+source ${KEYS_DIR}/env.sh
 
 echo "Push docker image to the Docker Hub..."
 docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
