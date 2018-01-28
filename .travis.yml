@@ -29,6 +29,9 @@ env:
 
 before_install: "./before_install.sh"
 
+install:
+  - pip install pipenv
+  - pipenv install
 
 jobs:
   include:
