@@ -4,3 +4,4 @@ __pycache__
 .cache/*
 
 keys/env.sh
+keys/env_travis.sh
