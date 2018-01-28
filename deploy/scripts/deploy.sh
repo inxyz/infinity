@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-KEYS_DIR="$(dirname "$0")../../keys"
+KEYS_DIR="$(dirname "$0")/../../keys"
 gpg ${KEYS_DIR}/env.sh.gpg
 source ${KEYS_DIR}/env.sh
 
