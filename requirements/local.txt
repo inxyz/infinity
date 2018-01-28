@@ -1,0 +1,11 @@
+# Local development dependencies go here
+-r test.txt
+
+# For debugging
+ipdb
+
+# For simulations
+jupyterlab
+
+# For docs
+mkdocs

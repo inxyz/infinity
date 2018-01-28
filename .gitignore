@@ -2,3 +2,7 @@
 *.py[cod]
 __pycache__
 .cache/*
+
+keys/env.sh
+keys/env_travis.sh
+.idea

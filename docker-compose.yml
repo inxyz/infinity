@@ -1,0 +1,68 @@
+version: '2'
+
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
+  redis_data: {}
+  redis_backup: {}
+
+services:
+  postgres:
+    image: postgres:9.6
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+    env_file:
+      - env.dev
+
+  redis:
+    image: redis:4.0
+    volumes:
+      - redis_data:/var/lib/redis
+      - redis_backup:/backups
+
+  celeryworker:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+      args:
+        requirements_file: local.txt
+    volumes:
+      - .:/app
+    depends_on:
+     - postgres
+     - redis
+    command: celery -A src.celery worker -l INFO --purge
+    env_file:
+      - env.dev
+
+  celerybeat:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+      args:
+        requirements_file: local.txt
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+    command: celery -A src.celery beat -l INFO
+    env_file:
+      - env.dev
+
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+      args:
+        requirements_file: local.txt
+    # TODO
+    image: metallica127/infinity:dev
+    command: /start-dev.sh
+    volumes:
+      - .:/app:rw
+      - ./compose/web/00-jupyterlab-startup.py:/root/.ipython/profile_default/startup/00-jupyterlab-startup.py:ro
+    ports:
+      - "8000:8000"
+      - "8888:8888"
