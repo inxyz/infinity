@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-PRIVATE_KEY=$1
-PRIVATE_KEY_PATH="~/.ssh/${PRIVATE_KEY}"
 
-echo ${VAULT_PASSWORD_KEY} | gpg --passphrase-fd 0 .vault_password.txt.gpg
+
+gpg ../../keys/env.sh.gpg
+source ../../keys/env.sh
 
 echo "Push docker image to the Docker Hub..."
 docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
-docker push infamily/infinity:latest
+docker push metallica127/infinity:latest
