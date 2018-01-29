@@ -1,0 +1,47 @@
+sudo: required
+language: python
+cache: pip
+python:
+- '3.6'
+services:
+- docker
+- redis-server
+addons:
+  postgresql: '9.6'
+  hosts:
+  - redis
+env:
+  global:
+  - DOCKER_COMPOSE_VERSION=1.16.1
+  - DATABASE_URL=postgres:///localhost:5432/postgres?user=postgres
+  - ANSIBLE_HOST_KEY_CHECKING=False
+  - ANSIBLE_VAULT_PASSWORD_FILE=.vault_password.txt
+  - REDIS_URL=redis://localhost:6379/0
+  - CACHE_REDIS_LOCATION=redis://redis:6379/0
+  - CHANNELS_REDIS_LOCATION=redis://redis:6379/1
+  - CELERY_BROKER_URL=redis://redis:6379/2
+  - CELERY_BROKER_BACKEND=redis://redis:6379/3
+  - secure: runomnTmQAZ+2qXMNZkA752fe2Qr9OpObfC6FZfYXQHM+N5jNwe29J40nDjmtAfG37QevaKefAYZ73GOwFAnQStYzM8sddwEGpS9uLRsqwfJLxUEuj0eumX1KMpX0tHCwvLxDX/OI/VUzFYw9NqWA52uUpSMVIhEGItujY6DZrR5uqq77uBXsW+kePKOyWSA/a7ijHkeeGrdOJokCO0b3kvm3FrP/hcd3Infi2sMEhVg1AsM8lsLIZZQssPtywheXfOnnlReYPWzizhXED70G8J+Tij3A8CF+Jfm6vT7g8Y0pKtepTCeMMnc4S/H6GZoTGoseQRINKCHGPw/0RRZTYOF3GX+O8Y6H3Y1qFaeRPWpMQL53+5RcWfQejj6Wc6pU62blxoRpGyy9019F2mveYPnCzcOcAtAkS84fxfJRUM8zk4D5vizspf+ONN3BTXlez1QuydbY+x9Q7p+b4yhvqZdGnPeDpKRh/HNDW3OkpmKEEK+FWio4hyRNMrrPeSlD1xT09yksML2UNCG20hSjNQ9wsNIVzsZa7iwdyvSF+G92MuIPuds/bGDSGM710Q/1MU4CX3nAE/WXUNLX0X6pPhoSL15/LeA+4hTtTMKnb2oapCL4HFlyOkz5jjaDb88/sDZU/7a++ZHHy6C/KPEOlkezujE8VD7/+AJ2LoNOtE=
+  - secure: sFZCQnJpoOJC8+nRdmHLYO+wL8uAAHdapeLykJFMYD05AkU3E2X0wYJgO9HckDltgeOtkSnqABMrwA1NaS1xQKLKnM9aFtS5nLDz4++h479foGkpXY1Rlva8rlgJbv4wmv+aYD+pnCg3jIvqEM8hJ5NpfxHLsZWjr9pUZWyaTo2nUKnsyBrXk27mAacH2v91mbgcg+JvH1Zqz1kevUslV7vhpGhrWDyZvWhPmc4jvH9BlDVkPkKCVsvWjnEHY13MXTijCxyNXMeEFO+xATIhdhWqkFpi1PlgfsJ/58m9wOs+nx+vPKzuSaJmmXg61Hxo1CnS5j+jZ58p4tWwdMcNi1w5xjW50XR6A3LASSN5ZtpbwJ8dRIxnIfa7Ikw/9VNP87Xn5yPPtZWbtjJSLR9AYV+opi1YkR8bBPArAnJp07OlPYrzu5JiHn/ugR+/aSAhntI4tAPRd+sH6xIRuK0rXrMvPn36+k66io3SVvN435L9PZBMUSV+TZ9vnJUzfSytKCvstF9R/HDEn7e2TicZWbUcVs0cqLJVayVCAf+l2dX8iVXXeJ+7vIDqAll+JV0MPysYBpY/3vxQMbN9d67jJ0RJcjfzgQ2I8MXJCjAkJB8jY5T7iAeH8+Jc/H0+5eWlK2c4tvSWo8jglyg7oV70LDxRFmyyUTV96Zn4HU8eLwU=
+branches:
+  only:
+  - base
+  except:
+  - master
+before_install: "./before_install.sh"
+install:
+- pip install pipenv
+- pipenv install
+script:
+- py.test && docker-compose build
+after_success:
+- echo "Build success!"
+after_failure:
+- echo "Build failure!"
+before_deploy:
+- "./deploy/scripts/git-merge-push.sh"
+deploy:
+  provider: script
+  script: "./deploy/scripts/deploy.sh"
+  on:
+    all_branches: true
