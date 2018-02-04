@@ -5,7 +5,10 @@ ENV PYTHONUNBUFFERED 1
 # Requirements have to be pulled and installed here, otherwise caching won't work
 #COPY ./requirements /requirements
 #RUN pip install --no-cache-dir -r /requirements/$requirements_file && rm -rf /requirements
-RUN pipenv install
+RUN pip install pipenv
+
+COPY . /app
+RUN cd /app && pipenv install
 
 COPY ./compose/web/docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x -R /usr/local/bin
