@@ -13,5 +13,4 @@ echo "Push docker image to the Docker Hub..."
 docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
 docker push metallica127/infinity:dev
 
-export ANSIBLE_HOST_KEY_CHECKING=False
 ansible-playbook -i ${KEYS_DIR}/inventory ${PLAYBOOK}
