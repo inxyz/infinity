@@ -7,7 +7,7 @@ services:
 - docker
 - redis-server
 addons:
-  postgresql: '10.1'
+  postgresql: '9.6'
   hosts:
   - redis
 env:
