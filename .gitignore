@@ -5,4 +5,8 @@ __pycache__
 
 keys/env.sh
 keys/env_travis.sh
+keys/inventory
+
 .idea
+
+*.retry

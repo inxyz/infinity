@@ -1,0 +1,27 @@
+---
+- hosts: gce
+#  gather_facts: False
+  vars:
+    project_dir: "{{ ansible_env.HOME }}/infinity"
+  tasks:
+
+  - git:
+      repo: 'https://github.com/aezik/infinity'
+      dest: "{{ project_dir }}"
+
+  - name: docker-compose pull images
+    shell: docker-compose pull
+    args:
+      chdir: "{{ project_dir }}"
+
+  - name: docker-compose rm web
+    shell: docker-compose rm -f web
+    args:
+      chdir: "{{ project_dir }}"
+
+  - name: docker-compose up web
+    shell: docker-compose up -d web
+    args:
+      chdir: "{{ project_dir }}"
+
+
